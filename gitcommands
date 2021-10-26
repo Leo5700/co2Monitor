@@ -7,6 +7,5 @@ git config --global user.name "Your Name"
 git pull origin
 git add .
 git commit -a -m "my comment" (--amend)
-git push -u origin master (--force)
-
-# git push origin HEAD
+# git push -u origin master (--force)
+git push origin HEAD
