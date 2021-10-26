@@ -1,5 +1,5 @@
 // CO2 meter T6703
-// Куплен на алике https://a.aliexpress.com/_AKztV7 в магазине Shop5617180 https://a.aliexpress.com/_9QTr4h
+// Датчик CO2 T6703 https://a.aliexpress.com/_AKztV7 из магазина Shop5617180 https://a.aliexpress.com/_9QTr4h
 // По наводке https://habr.com/ru/company/lamptest/blog/536294/
 // Подключение к Arduino Nano или Uno:
 // Сенсор: SDA - A4, SCL - A5, V++ - 5V, GND - GND, CTRL - GND

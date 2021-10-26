@@ -1,5 +1,5 @@
 
-// LCD экран https://a.aliexpress.com/_AkEVMG из https://greatzt.aliexpress.ru/store/1916536
+// Экран SSD1306 https://a.aliexpress.com/_AkEVMG из магазина https://greatzt.aliexpress.ru/store/1916536
 // Oled-дисплей 0,96 дюйма, IIC, последовательный белый OLED-дисплей,
 // модуль 128X64 I2C SSD1306 12864 плата с ЖК-экраном GND VDD SCK SDA для Arduino
 // Мне попался экран не 128х64 а 128х60, проверил выводом пикселя.
