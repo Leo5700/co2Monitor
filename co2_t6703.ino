@@ -16,22 +16,22 @@
 // Вместе с ардуинкой, жрёт 0.030А в фоне и 0.150А в момент срабатывания
 // датчика (датчик жрёт ток примерно 1 секунду)
 // На датчике не предусмотрено узлов крепления, это подстава.
-// Зато он самокалибрующийся, не ужна беготня на улицу.
+// Зато он самокалибрующийся, не нужна беготня на улицу.
 
 
-//Эти команды пришлось зафигачить в основной скрипт
-//#include <Wire.h>
-//uint8_t rc;
-//int co2ppm = 0;
+// Эти команды пришлось зафигачить в основной скрипт
+// #include <Wire.h>
+// uint8_t rc;
+// int co2ppm = 0;
 
-//#define T67XX_I2C_ADDRESS                                       (0x15)
-//#define T67XX_I2C_REQUEST_SIZE                                  (0x05)
-//#define T67XX_I2C_RESPONSE_SIZE                                 (0x04)
-//#define T67XX_I2C_RESPONSE_DELAY                                (0x0A)
-//#define T67XX_I2C_FIELD_FUNCTION_CODE                           (0x00)
-//#define T67XX_I2C_FIELD_BYTES_COUNT                             (0x01)
-//#define T67XX_I2C_FIELD_DATA_MSB                                (0x02)
-//#define T67XX_I2C_FIELD_DATA_LSB                                (0x03)
+// #define T67XX_I2C_ADDRESS                                       (0x15)
+// #define T67XX_I2C_REQUEST_SIZE                                  (0x05)
+// #define T67XX_I2C_RESPONSE_SIZE                                 (0x04)
+// #define T67XX_I2C_RESPONSE_DELAY                                (0x0A)
+// #define T67XX_I2C_FIELD_FUNCTION_CODE                           (0x00)
+// #define T67XX_I2C_FIELD_BYTES_COUNT                             (0x01)
+// #define T67XX_I2C_FIELD_DATA_MSB                                (0x02)
+// #define T67XX_I2C_FIELD_DATA_LSB                                (0x03)
 
 uint8_t getT67XXMetric(uint8_t _i2cAddress, uint16_t* _value) {
   //

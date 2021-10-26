@@ -1,4 +1,8 @@
-// Индикатор концентрации CO2, сотоит из ардуинки nano, датчика и экранчика.
+// Индикатор концентрации CO2, сотоит из ардуинки nano, датчика и экранчика.`
+// Умеет показывать текущее значение PPM, графики PPM за 6, 60 и 600 минут.
+// При привышении 1200 PPM (отображается точками) включается 13й пин и встроееный led, 
+// ниже 800 PPM выключается.
+// Данные обновляются раз в 6 секунд.
 // Подробности на других страницах скрипта.
 
 
@@ -22,13 +26,13 @@ bool timer1 = false, timer2 = false, timer3 = false;
 unsigned long time1, time2, time3;
 
 // Таймеры индикации 1го 2го и 3го блока данных
-unsigned long dt1 = (unsigned long) (6. / 42 * 1000 * 60); // 6 минут на 43 (43-1, если с зазором) точки, в милисекундах !не менее 3000 (ограничение датчика сo2)
+unsigned long dt1 = (unsigned long) (6. / 42 * 1000 * 60); // 6 минут на 43 (43-1, если с зазором) точки, в миллисекундах !не менее 3000 (ограничение датчика сo2)
 unsigned long dt2 = (unsigned long) (60. / 42 * 1000 * 60); // 1 час
 unsigned long dt3 = (unsigned long) (600. / 41 * 1000 * 60); // 10 часов
 
-//unsigned long dt1 = (unsigned long) (4. / 43 * 1000 * 60); //// debug
-//unsigned long dt2 = (unsigned long) (9. / 43 * 1000 * 60); ////
-//unsigned long dt3 = (unsigned long) (13. / 42 * 1000 * 60); ////
+// unsigned long dt1 = (unsigned long) (4. / 43 * 1000 * 60); //// debug
+// unsigned long dt2 = (unsigned long) (9. / 43 * 1000 * 60); ////
+// unsigned long dt3 = (unsigned long) (13. / 42 * 1000 * 60); ////
 int c1[43];
 int c2[43];
 int c3[42];
@@ -36,12 +40,12 @@ int c3[42];
 
 void setup() {
   Serial.begin(9600);
-  Wire.begin(); //T6703
-  setup_1306(); //1306
+  Wire.begin(); // T6703
+  setup_1306(); // 1306
   hardClear();
 
-  //printStringSmallFont(48, 12, "Превед...");
-  //delay(2500); // чтоб датчик прочухался
+  printStringSmallFont(30, 24, "Привет, хуман...");
+  delay(500);
 
   unsigned long current_time_0 = millis();
   time1 = current_time_0;
@@ -58,11 +62,14 @@ void setup() {
     c3[i] = 0;
   }
 
-  Serial.println("https://lexus2k.github.io/ssd1306/group___l_c_d___f_o_n_t_s.html"); //// TODO вставить ссылку на репозиторий с кодом
+  pinMode(13, OUTPUT); // LED_BUILTIN
+  digitalWrite(13, LOW);
+
+  Serial.println("https://github.com/Leo5700/co2Monitor");
 }
 
 void loop() {
-  // Проверям сработали ли таймеры
+  // Проверяем сработали ли таймеры
   timer1 = false;
   timer2 = false;
   timer3 = false;
@@ -103,19 +110,21 @@ void loop() {
       for (int i = 42; i > 0; i--)
         c1[i] = c1[i - 1];
       c1[0] = co2ppm;
+      Serial.println(co2ppm);
     } else {
       printStringSmallFont(48, 12, "Sensor failure");
+      Serial.println("Sensor failure");
     }
 
 
-    // отрисовка графиков
+    // Отрисовка графиков
 
     for (int i = 0; i < 43 - 1; i++) { // -1 пиксель на зазор м\графиками
       int x = i;
       int y = int(map(c1[i], cmin, cmax, 59, 0));
       if (y >= 0 && y <= 59) {
-        //        ssd1306_putPixel(x, y);
-        ssd1306_setColor(255); ////
+        // ssd1306_putPixel(x, y);
+        ssd1306_setColor(255);
         ssd1306_fillRect(x, y, x, 59);
       }
     }
@@ -123,8 +132,8 @@ void loop() {
       int x = i + 43;
       int y = int(map(c2[i], cmin, cmax, 59, 0));
       if (y >= 0 && y <= 59) {
-        //        ssd1306_putPixel(x, y);
-        ssd1306_setColor(255); ////
+        // sd1306_putPixel(x, y);
+        ssd1306_setColor(255);
         ssd1306_fillRect(x, y, x, 59);
       }
     }
@@ -132,21 +141,27 @@ void loop() {
       int x = i + 86;
       int y = int(map(c3[i], cmin, cmax, 59, 0));
       if (y >= 0 && y <= 59) {
-        //        ssd1306_putPixel(x, y);
-        ssd1306_setColor(255); ////
+        // ssd1306_putPixel(x, y);
+        ssd1306_setColor(255);
         ssd1306_fillRect(x, y, x, 59);
       }
     }
 
     if (rc) {
-      if (co2ppm <= 999) // трёхзначное число пишем немного с другим отсупом, чем четырёхзначное
+      if (co2ppm <= 999) // трёхзначное число пишем немного с другим отступом, чем четырёхзначное
         printIntBigFont(47, 54, co2ppm);
       else
         printIntBigFont(40, 54, co2ppm);
     }
+
+    // Зажигаем/гасим лампочку
+    if (co2ppm > 1200)
+      digitalWrite(LED_BUILTIN, HIGH);
+    if (co2ppm < 800) // скрепя сердце примем нижний порог 800 PPM
+      digitalWrite(LED_BUILTIN, LOW);
   }
 
-  // Записываем паказания во второй и третий блок по медленным таймерам
+  // Записываем показания во второй и третий блок по медленным таймерам
   if (timer2) {
     for (int i = 42; i > 0; i--)
       c2[i] = c2[i - 1];
