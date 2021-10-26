@@ -1,9 +1,13 @@
 # Hello...
 
 Вы видите простейший индикатор CO2 изо всякого хлама с Aliexpress
+
 Датчик CO2 T6703 https://a.aliexpress.com/_AKztV7 из магазина Shop5617180 https://a.aliexpress.com/_9QTr4h
+
 Экран SSD1306 https://a.aliexpress.com/_AkEVMG из магазина https://greatzt.aliexpress.ru/store/1916536
+
 Плата Arduino Nano
+
 Корпус из маленькой макетки и того, что оказалось под рукой
 
 ![photo_2021-10-24_23-08-53 001](https://user-images.githubusercontent.com/5260590/138611017-f31e19f1-2c3a-4e82-9ff4-36ca6daa69af.jpg)
