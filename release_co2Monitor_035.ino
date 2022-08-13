@@ -6,6 +6,15 @@
 // Подробности на других страницах скрипта.
 
 
+// Решение проблемы permission USB при первой загрузке скетча в Linux
+// https://arduino.stackexchange.com/questions/74714/arduino-dev-ttyusb0-permission-denied-even-when-user-added-to-group-dialout-o
+//    Add your standard user to the group "dialout'
+//    sudo usermod -a -G dialout your-username
+//    Add your standard user to the group "tty"
+//    sudo usermod -a -G tty your-username
+//    Logout/Login
+
+
 // Датчик T6703
 #include <Wire.h>
 uint8_t rc;
